@@ -1,0 +1,1 @@
+### “O Web Scraping foi implementado de forma customizada, sem uso do framework Scrapy, com o objetivo de demonstrar controle total do processo de coleta, arquitetura de pipeline e boas práticas de engenharia de dados.”

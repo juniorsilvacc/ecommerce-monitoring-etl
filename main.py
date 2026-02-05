@@ -7,17 +7,12 @@ def main():
     requester = HttpRequester() 
     response = requester.request_from_page() 
     
-    html = response["html"] 
-    
-    products = MercadoLivreParser.extract_product_list(html)
+    products = MercadoLivreParser.extract_product_list(response["html"] )
     
     print(f"{len(products)} produtos coletados") 
     
-    for product in products[:5]: 
-        print(product)
-        
-    print(type(products))
-    print(products)
+    if products: 
+        print(products[:5])
 
 if __name__ == "__main__": 
     main()

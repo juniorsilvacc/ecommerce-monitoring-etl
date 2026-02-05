@@ -1,18 +1,13 @@
-from src.drivers.http_requester import HttpRequester 
-from src.drivers.html_scrape import MercadoLivreParser 
+from src.pipelines.mercado_livre_pipeline import MercadoLivrePipeline
 
 def main(): 
-    print("Inicializando...") 
+    # Executa o Pipeline de extração
+    ml_pipeline = MercadoLivrePipeline()
+    total_coletado = ml_pipeline.run()
     
-    requester = HttpRequester() 
-    response = requester.request_from_page() 
-    
-    products = MercadoLivreParser.extract_product_list(response["html"] )
-    
-    print(f"{len(products)} produtos coletados") 
-    
-    if products: 
-        print(products[:5])
+    print("-" * 30)
+    print(f"Sucesso! Processo finalizado.")
+    print(f"Total de itens extraídos e salvos na Bronze: {total_coletado}")
 
 if __name__ == "__main__": 
     main()

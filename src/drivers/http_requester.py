@@ -4,7 +4,7 @@ from .interfaces.http_requester_interface import HttpRequesterInterface
 
 class HttpRequester(HttpRequesterInterface):
     def __init__(self) -> None:
-        self._url = (
+        self._base_url = (
             "https://lista.mercadolivre.com.br/_Container_household-appliances"
         )
 
@@ -19,17 +19,16 @@ class HttpRequester(HttpRequesterInterface):
         self._session = requests.Session()
         self._session.headers.update(self._headers)
 
-    def fetch(self) -> requests.Response:
-        response = self._session.get(self._url, timeout=10) 
+    def fetch(self, offset: int = 1) -> requests.Response:
+        url = self._base_url if offset == 1 else f"{self._base_url}_Desde_{offset}"
+        
+        response = self._session.get(url, timeout=10) 
         response.raise_for_status()
-        
         return response
-       
-    def request_from_page(self) -> Dict[str, str | int]:
-        response = self.fetch()
         
-        if response is None:
-            return None
+    def request_from_page(self, offset: int = 1) -> Dict[str, str | int]:
+        response = self.fetch(offset)
+        if not response: return None
     
         return {
             "status_code": response.status_code,

@@ -68,6 +68,12 @@ class MercadoLivreParser(HtmlScrapeInterface):
             
             # Valor atual
             price_current = cls._extract_price(current_price_container)
+            
+            # Envio
+            shipping_tag = item.select_one("div.poly-component__shipping")
+            shipping = None
+            if shipping_tag:
+                shipping = (shipping_tag.get_text(separator=" ", strip=True) if shipping_tag else None)
 
             # Avaliações
             labels  = item.select(
@@ -85,6 +91,7 @@ class MercadoLivreParser(HtmlScrapeInterface):
                 "store": store,
                 "price_old": price_old,
                 "price_current": price_current,
+                "shipping": shipping,
                 "rating": rating,
                 "sold_raw": sold_raw,
             }

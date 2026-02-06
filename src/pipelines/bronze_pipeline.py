@@ -10,8 +10,11 @@ class BronzePipeline:
         bronze_dir = f"data/bronze/mercadolivre/{today}"
         
         if os.path.exists(bronze_dir) and any(f.endswith('.json') for f in os.listdir(bronze_dir)):
-            print(f"✅ Extração de hoje ({today}) já encontrada. Pulando para Transformação...")
+            print(f"\n[SKIP] ⏩ Extração de hoje ({today}) encontrada. Pulando extração...")
         else:
-            print("🚀 Iniciando transformação Bronze...")
+            print(f"\n[BRONZE] 🥉 Iniciando extração do Mercado Livre para {today}...")
+            
             self.extract.extract()
-            print(f"Dados extraidos e salvos com sucesso ✅")
+            
+            print(f"✅ Extração concluída com sucesso!")
+            print(f"🚀 Dados prontos para transformação na camada Bronze.")

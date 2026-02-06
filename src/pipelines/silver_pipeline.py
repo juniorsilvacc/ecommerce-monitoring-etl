@@ -3,8 +3,12 @@ class SilverPipeline:
         self.transform = transform
 
     def run(self):
-        print("🥈 Iniciando transformação Bronze -> Silver...")
+        print(f"\n[SILVER] 🥈 Iniciando processamento: Bronze -> Silver")
         
-        self.transform.transform()
+        path = self.transform.transform()
         
-        print(f"Dados transformados e salvos com sucesso ✅")
+        if path:
+            print(f"✅ Transformação concluída com sucesso!")
+            print(f"🚀 Dados prontos para análise na camada Silver.")
+        else:
+            print(f"⚠️  Aviso: Nenhum dado novo foi processado.")

@@ -1,23 +1,22 @@
-from src.pipelines.mercado_livre_pipeline import MercadoLivrePipeline
+from src.extracts.mercadolivre_extract import MercadoLivreExtract
+from src.transformations.mercadolivre_transform import MercadolivreTransform
+from src.pipelines.bronze_pipeline import BronzePipeline
+from src.pipelines.silver_pipeline import SilverPipeline
 from src.drivers.http_requester import HttpRequester
 from src.drivers.html_scrape import MercadoLivreParser
 
 def main(): 
-    print("Iniciando extração dos dados...")
-    
-    # Instanciar os Drivers
+    # --- CAMADA BRONZE (EXTRAÇÃO) ---
     request = HttpRequester()
     parser = MercadoLivreParser()
+    extract_tool = MercadoLivreExtract(requester=request, parser=parser)
+    bronze_pipeline = BronzePipeline(extract=extract_tool)
+    bronze_pipeline.run()
     
-    # Injeta os drivers no pipeline
-    ml_pipeline = MercadoLivrePipeline(requester=request, parser=parser)
-    
-    # Execução do processo
-    total_coletado = ml_pipeline.run()
-    
-    print("-" * 30)
-    print(f"Sucesso! Processo finalizado.")
-    print(f"Total de itens extraídos e salvos na Bronze: {total_coletado}")
+    # --- CAMADA SILVER (TRANSFORMAÇÃO) ---
+    transformer = MercadolivreTransform()
+    silver_pipeline = SilverPipeline(transform=transformer)
+    silver_pipeline.run()
 
 if __name__ == "__main__": 
     main()

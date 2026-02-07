@@ -28,15 +28,13 @@ Cada linha representa **um produto coletado em um momento específico**.
 
 ## Tabela: `mercadolivre_produtos_silver`
 
-## Chaves e Identificadores
-
 ### `produto_id`
 - **Tipo:** string
 - **Descrição:** Identificador único do produto no Mercado Livre
 - **Origem:** Extraído da URL / estrutura do site
 - **Observação:** Não é chave primária absoluta, pois o mesmo produto pode aparecer em diferentes datas de coleta.
 
-## Atributos Descritivos
+---
 
 ### `titulo`
 - **Tipo:** string
@@ -64,7 +62,7 @@ Cada linha representa **um produto coletado em um momento específico**.
   - Outros textos fornecidos pelo marketplace
 - **Uso:** Análise de competitividade e experiência do consumidor
 
-## Atributos Financeiros
+---
 
 ### `preco_atual`
 - **Tipo:** float
@@ -83,8 +81,6 @@ Cada linha representa **um produto coletado em um momento específico**.
 
 ---
 
-## Atributos de Performance
-
 ### `avaliacao`
 - **Tipo:** float
 - **Descrição:** Nota média do produto (0 a 5)
@@ -102,7 +98,7 @@ Cada linha representa **um produto coletado em um momento específico**.
   - Textos como `"+10 mil vendidos"` → `10000`
 - **Uso:** Ranking de produtos, análise de popularidade
 
-## Metadados
+---
 
 ### `data_processamento`
 - **Tipo:** timestamp (string formatada)

@@ -57,7 +57,7 @@ Uso de `errors='coerce'`:
 
 ## 3. Tratamento de Valores
 
-### Tratamento do Preço Antigo
+### Tratamento da Coluna `preco_antigo`
 
 Quando `preco_antigo` é nulo, ele recebe o valor de `preco_atual`.
 
@@ -76,9 +76,11 @@ Essa abordagem permite identificar promoções de forma indireta:
 - Se `preco_antigo == preco_atual` → sem desconto
 - Se `preco_antigo > preco_atual` → produto em promoção
 
-## 4. Tratamento da Coluna `vendido`
+---
 
-Problema na camada Bronze
+### Tratamento da Coluna `vendido`
+
+### Problema na camada Bronze
 
 O campo `sold_raw` vem em formatos variados, por exemplo:
 - "+10 mil vendidos"
@@ -104,7 +106,9 @@ A coluna `vendido` passa a representar:
 
 Essa abordagem mantém a **intenção original do dado**, sem perder informação.
 
-## 5. Tratamento da Coluna `loja`
+---
+
+### Tratamento da Coluna `loja`
 
 ### Problema
 
@@ -122,7 +126,9 @@ Substituição por `"Não Informado"`.
 - Permite agrupar produtos sem loja identificada
 - Mantém consistência visual em relatórios e dashboards
 
-## 6. Tratamento da Coluna `envio`
+---
+
+### Tratamento da Coluna `envio`
 
 ### Problema
 
@@ -138,7 +144,9 @@ Substituição por `"Consultar Frete"`.
 - Evita inferências erradas (ex: assumir frete grátis)
 - Mantém o dado interpretável para o analista
 
-## 7. Tratamento da Coluna `avaliacao`
+---
+
+### Tratamento da Coluna `avaliacao`
 
 ### Regra aplicada
 
@@ -150,7 +158,7 @@ Valores nulos são preenchidos com `0.0`.
 - Zero representa ausência de avaliação, não erro
 - Facilita cálculos de média e filtros
 
-## 8. Metadado `data_processamento`
+## Metadado `data_processamento`
 
 ### Por que adicionar essa coluna?
 
@@ -163,8 +171,6 @@ Benefícios:
 - Diagnóstico de reprocessamentos
 
 Esse campo é essencial em pipelines de dados profissionais.
-
----
 
 ## Considerações Finais
 

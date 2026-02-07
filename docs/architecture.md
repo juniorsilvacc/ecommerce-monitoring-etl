@@ -2,21 +2,17 @@
 
 ## Objetivo do Projeto
 
-Este projeto tem como objetivo coletar, estruturar, transformar e disponibilizar
-dados de produtos do Mercado Livre para fins de análise de preços, vendas,
-descontos e comportamento de mercado.
+Este projeto tem como objetivo coletar, estruturar, transformar e disponibilizar dados de produtos do Mercado Livre para fins de análise de preços, vendas, descontos e comportamento de mercado.
 
 A arquitetura foi pensada para ser:
-- simples
-- escalável
-- rastreável
-- alinhada a boas práticas de engenharia de dados
+- Simples
+- Escalável
+- Rastreável
+- Alinhada a boas práticas de engenharia de dados
 
 ## Visão Geral da Arquitetura
 
-O projeto segue um modelo inspirado em **ELT (Extract, Load, Transform)**,
-com separação clara de responsabilidades entre coleta, armazenamento e tratamento
-dos dados.
+O projeto segue um modelo inspirado em **ELT (Extract, Load, Transform)**, com separação clara de responsabilidades entre coleta, armazenamento e tratamento dos dados.
 
 A estrutura principal é dividida em:
 
@@ -42,7 +38,6 @@ ecommerce-monitoring-etl/
 │   └── gold/                       # Dados agregados e KPIs - Pronto para Dashboards
 ├── notebooks/                  # Experimentos, análise exploratória e prototipagem
 ├── docs/                       # Documentação técnica, arquitetura e decisões
-├── tests/                      # Testes unitários e de integração (Garante a confiabilidade)
 ├── main.py                     # Ponto de entrada do sistema
 ├── Dockerfile                  # Receita para criar a imagem do container
 ├── docker-compose.yml          # Orquestração do Python + Banco de Dados
@@ -63,13 +58,18 @@ A pasta `src/drivers` é responsável pela **interação com fontes externas**.
 - Extrai apenas informações visíveis no HTML
 - Não realiza normalizações ou cálculos analíticos
 
+### Database
+- Pool de Conexões: Garante que a conexão com o banco seja eficiente.
+- Abstração de Dialeto: Permite que o código Python fale "SQL" de forma genérica.
+- Robustez: Implementa lógica de Healthcheck e retentativa de conexão para sincronia com o Docker.
+
 Essa separação garante que mudanças na interface do site não afetem diretamente as regras de negócio.
 
-## Camada de Dados
+## O Ciclo do Dado (Pipeline)
 
 O projeto utiliza o padrão medalhão (**Bronze / Silver / Gold**).
 
-### Bronze 🥉
+### Ingestão (Bronze 🥉)
 - Dados crus, sem tratamento
 - Representam exatamente o que foi coletado
 - Servem como fonte de reprocessamento
@@ -83,7 +83,7 @@ Exemplos:
 
 ---
 
-### Silver 🥈
+### Processamento (Silver 🥈)
 - Dados tratados e normalizados
 - Tipos corrigidos (string → número)
 - Campos derivados adicionados
@@ -97,7 +97,7 @@ Exemplos:
 
 ---
 
-### Gold 🥇
+### Entrega (Gold 🥇 / SQL)
 - Dados prontos para análise e visualização
 - Agregações, rankings e métricas
 - Utilizados por dashboards e notebooks

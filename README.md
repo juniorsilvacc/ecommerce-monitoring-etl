@@ -41,48 +41,50 @@ Construir um pipeline ETL capaz de:
 
 ```text
 ecommerce-monitoring-etl/
-│
 ├── src/
-│ ├── drivers/
-│ │ ├── http_requester.py
-│ │ ├── html_scrape.py 
-│ │ └── interfaces/
-│ │ └── http_requester_interface.py
-│ │ └── html_scrape_interface.py
-│ │
-│ ├── transforms/
-│ │ └── mercadolivre_transform.py
-│ │
-│ ├── extracts/
-│ │ └── mercadolivre_extract.py
-│ │
-│ ├── pipelines/
-│ │ └── bronze_pipeline.py
-│ │ └── silver_pipeline.py
-│ │
-│ ├── utils/
-│ │ └── file_handler.py
-│ │
-│ └── main.py
+│   ├── drivers/                      # Implementações técnicas (Low-level)
+│   │   ├── database.py               # SQLAlchemy / PostgreSQL logic
+│   │   ├── http_requester.py         # Requests / Session logic
+│   │   ├── html_scrape.py            # BeautifulSoup logic
+│   │   └── interfaces/               # Contratos (Abstrações)
+│   │       ├── db_interface.py
+│   │       ├── http_interface.py
+│   │       └── scrape_interface.py
+│   │
+│   ├── extracts/                     # Lógica de extração por fonte (Bronze)
+│   │   └── mercadolivre_extract.py
+│   │
+│   ├── transforms/                   # Lógica de negócio e limpeza (Silver)
+│   │   └── mercadolivre_transform.py
+│   │
+│   ├── pipelines/                    # Orquestração dos fluxos de dados
+│   │   ├── bronze_pipeline.py        # Extract -> Load (Bronze)
+│   │   └── silver_pipeline.py        # Bronze -> Transform -> Load (Silver/Gold)
+│   │
+│   ├── config/                       # Variáveis e conexões
+│   │   └── db.py                     # DBConfig & Connection String
+│   │
+│   └── utils/                        # Helpers genéricos
+│       └── file_handler.py           # Manipulação de JSON/Parquet/FileSystem
 │
-├── data/
-│ ├── bronze/
-│ │ └── mercadolivre/
-│ │ └── *.json
-│ │
-│ ├── silver/
-│ │ └── mercadolivre/
-│ │ └── *.parquet
+├── data/                             # Volumes de dados (Data Lake Local)
+│   ├── bronze/                       # Dados brutos (Imutáveis)
+│   │   └── mercadolivre/
+│   └── silver/                       # Dados limpos (Tipados)
+│       └── mercadolivre/
 │
-├── docs/
-│ ├── architecture.md
-│ ├── transformations.md
-│ └── data_model.md
-│
-├── .gitignore
-├── main.py
-├── README.md
-└── requirements.txt
+├── docs/                             # Documentação do projeto
+│   ├── architecture.md
+│   ├── transformations.md
+│   └── data_model.md
+│ 
+├── .env                              # Variáveis sensíveis (não commitado)
+├── .gitignore                        # Ignorar venv, data/ e .env
+├── Dockerfile                        # Receita da imagem
+├── docker-compose.yml                # Orquestração App + DB
+├── main.py                           # Entry point da aplicação
+├── README.md                         # Guia rápido do projeto
+└── requirements.txt                  # Dependências do projeto
 ```
 
 ## 🛠 Tecnologias Utilizadas
@@ -93,6 +95,8 @@ ecommerce-monitoring-etl/
 - **Pandas**
 - **Parquet**
 - **Virtualenv**
+- **SQLAlchemy**
+- **Docker**
 
 ## 🔄 Pipeline ETL
 
@@ -162,6 +166,7 @@ Principais campos:
 
 ## ▶️ Como Executar o Projeto
 
+### Ambiente Local
 ```bash
 # Criar o ambiente
 python3 -m venv venv
@@ -174,6 +179,40 @@ pip install -r requirements.txt
 
 # Executa o main.py
 python3 main.py
+```
+
+### Ambiente Docker (RECOMENDADO)
+
+Comandos Principais:
+
+```bash
+# 1. Primeira execução ou após mudanças no código/dependências
+# (Constrói a imagem e sobe os containers)
+docker compose up --build
+
+# 2. Reexecutar o ETL (sem precisar reconstruir tudo)
+# O parâmetro -a exibe os logs no terminal em tempo real
+docker start -a etl_app_container
+
+# 3. Parar os containers mantendo os dados do banco
+docker compose stop
+```
+
+Caso precise verificar a saúde dos serviços ou inspecionar os dados persistidos:
+
+```bash
+# Verificar se os containers estão rodando e a saúde (healthcheck) do banco
+docker ps
+
+# Acessar os logs do banco de dados em caso de erro de conexão
+docker logs ecommerce_db_container
+
+# Acessar o terminal interativo do PostgreSQL para rodar queries SQL
+docker exec -it ecommerce_db_container psql -U postgres -d ecommerce_monitoring-etl-db
+
+# Limpar o ambiente completamente (remove containers, imagens e VOLUMES de dados)
+# CUIDADO: Isso apagará seu banco de dados!
+docker compose down -v
 ```
 
 👨‍💻 Autor

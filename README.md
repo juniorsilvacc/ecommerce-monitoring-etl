@@ -178,5 +178,4 @@ python3 main.py
 
 👨‍💻 Autor
 
-Projeto desenvolvido por Junior Silva
-Foco em Engenharia de Dados, BI e Analytics
+Projeto desenvolvido por **Junior Silva**.

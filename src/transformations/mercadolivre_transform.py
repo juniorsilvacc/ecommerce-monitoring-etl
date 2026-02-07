@@ -72,6 +72,6 @@ class MercadolivreTransform():
         df['data_processamento'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
         # Salvar
-        final_path = save_to_silver(df, source='mercadolivre', format="parquet")
+        save_to_silver(df, source='mercadolivre', format="parquet")
         
-        return final_path
+        return df

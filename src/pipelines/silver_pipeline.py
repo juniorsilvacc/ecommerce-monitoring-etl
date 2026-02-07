@@ -1,14 +1,18 @@
+from src.drivers.database import DatabaseDriver
+
 class SilverPipeline:
     def __init__(self, transform):
         self.transform = transform
+        self.db_driver = DatabaseDriver()
 
     def run(self):
-        print(f"\n[SILVER] 🥈 Iniciando processamento: Bronze -> Silver")
+        print(f"\n🥈 Iniciando processamento: Bronze -> Silver")
         
-        path = self.transform.transform()
+        df = self.transform.transform()
         
-        if path:
-            print(f"✅ Transformação concluída com sucesso!")
-            print(f"🚀 Dados prontos para análise na camada Silver.")
+        if df is not None:
+            self.db_driver.save_dataframe(df, table_name="mercadolivre_produtos")
+            
+            print(f"✅ Pipeline Silver finalizado com sucesso.")
         else:
-            print(f"⚠️  Aviso: Nenhum dado novo foi processado.")
+            print(f"⚠️ Aviso: Nenhum dado novo foi processado.")

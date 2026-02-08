@@ -54,9 +54,11 @@ df['percentual_desconto'] = (
 ```
 
 **Exemplo:**
+```text
 Preço Antigo: R$ 100,00
 Preço Atual: R$ 80,00
     -> Desconto = 20%
+```
 
 **Descrição:**
 Calcula o percentual de desconto aplicado em relação ao preço original do produto.
@@ -85,9 +87,11 @@ df['faturamento_estimado'] = (
 ```
 
 **Exemplo:**
+```text
 Preço: R$ 50,00
 Vendidos: 10
     -> Faturamento = R$ 500,00
+```
 
 **Descrição:**
 Representa o volume financeiro estimado gerado por cada produto.

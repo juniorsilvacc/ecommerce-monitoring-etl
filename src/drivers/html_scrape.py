@@ -1,7 +1,7 @@
 import re
 from typing import List, Dict
 from bs4 import BeautifulSoup
-from .interfaces.html_scrape_interface import HtmlScrapeInterface
+from src.drivers.interfaces.html_scrape_interface import HtmlScrapeInterface
 
 class MercadoLivreParser(HtmlScrapeInterface):
     """Classe responsável por transformar HTML bruto do ML em dados estruturados."""

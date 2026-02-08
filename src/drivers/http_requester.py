@@ -1,8 +1,10 @@
 import requests
 from typing import Dict
-from .interfaces.http_requester_interface import HttpRequesterInterface
+from src.drivers.interfaces.http_requester_interface import HttpRequesterInterface
 
 class HttpRequester(HttpRequesterInterface):
+    """Gerencia conexões e buscas de páginas via HTTP."""
+    
     def __init__(self) -> None:
         self._base_url = (
             "https://lista.mercadolivre.com.br/_Container_household-appliances"
@@ -20,6 +22,7 @@ class HttpRequester(HttpRequesterInterface):
         self._session.headers.update(self._headers)
 
     def fetch(self, offset: int = 1) -> requests.Response:
+        """Faz a chamada técnica ao site e retorna a resposta bruta."""
         url = self._base_url if offset == 1 else f"{self._base_url}_Desde_{offset}"
         
         response = self._session.get(url, timeout=10) 
@@ -27,6 +30,7 @@ class HttpRequester(HttpRequesterInterface):
         return response
         
     def request_from_page(self, offset: int = 1) -> Dict[str, str | int]:
+        """Busca o conteúdo da página e organiza em um dicionário."""
         response = self.fetch(offset)
         if not response: return None
     

@@ -42,49 +42,48 @@ Construir um pipeline ETL capaz de:
 ```text
 ecommerce-monitoring-etl/
 ├── src/
-│   ├── drivers/                      # Implementações técnicas (Low-level)
-│   │   ├── database.py               # SQLAlchemy / PostgreSQL logic
-│   │   ├── http_requester.py         # Requests / Session logic
-│   │   ├── html_scrape.py            # BeautifulSoup logic
-│   │   └── interfaces/               # Contratos (Abstrações)
+│   ├── drivers/                            # Tecnologia bruta (Requests, BS4, SQLAlchemy)
+│   │   ├── database.py
+│   │   ├── http_requester.py
+│   │   ├── html_scrape.py
+│   │   └── interfaces/                     # Contratos para garantir flexibilidade
 │   │       ├── db_interface.py
 │   │       ├── http_interface.py
 │   │       └── scrape_interface.py
 │   │
-│   ├── extracts/                     # Lógica de extração por fonte (Bronze)
-│   │   └── mercadolivre_extract.py
+│   ├── stages/                             # Estágios das Camadas de Dados (Bronze, Silver e Gold)
+│   │   ├── extract/                        # Coleta e salva na Bronze
+│   │   ├── transform/                      # Limpa, Transforma e Organiza e salva na Silver
+│   │   └── load/                           # Persistência final na Gold (Postgres)
 │   │
-│   ├── transforms/                   # Lógica de negócio e limpeza (Silver)
-│   │   └── mercadolivre_transform.py
+│   ├── pipelines/                          # Orquestração dos fluxos de dados
+│   │   ├── bronze_pipeline.py              # Extract -> Extração (Bronze)
+│   │   └── silver_pipeline.py              # Transform -> Transformação -> Load (Silver/Gold)
 │   │
-│   ├── pipelines/                    # Orquestração dos fluxos de dados
-│   │   ├── bronze_pipeline.py        # Extract -> Load (Bronze)
-│   │   └── silver_pipeline.py        # Bronze -> Transform -> Load (Silver/Gold)
+│   ├── infra/                              # Configurações de sistema e modelos
+│   │   ├── mercadolivre_model.py           # O "molde" dos dados (Schemas)
+│   │   └── db_config.py                    # Strings de conexão e setup do banco
 │   │
-│   ├── config/                       # Variáveis e conexões
-│   │   └── db.py                     # DBConfig & Connection String
-│   │
-│   └── utils/                        # Helpers genéricos
-│       └── file_handler.py           # Manipulação de JSON/Parquet/FileSystem
+│   └── utils/                              # Utilitários
+│       └── file_handler.py                 # Leitura/Escrita de arquivos físicos
 │
-├── data/                             # Volumes de dados (Data Lake Local)
-│   ├── bronze/                       # Dados brutos (Imutáveis)
-│   │   └── mercadolivre/
-│   └── silver/                       # Dados limpos (Tipados)
-│       └── mercadolivre/
+├── data/                                   # Camadas de arquivos (Lake Local)
+│   ├── bronze/                             # Dados brutos (Imutáveis)
+│   └── silver/                             # Dados limpos (Tratados)
 │
-├── docs/                             # Documentação do projeto
-│   ├── architecture.md
-│   ├── transformations.md
-│   └── data_model.md
-│ 
-├── .env                              # Variáveis sensíveis (não commitado)
-├── .gitignore                        # Ignorar venv, data/ e .env
-├── Dockerfile                        # Receita da imagem
-├── docker-compose.yml                # Orquestração App + DB
-├── main.py                           # Entry point da aplicação
-├── README.md                         # Guia rápido do projeto
-└── requirements.txt                  # Dependências do projeto
+├── docs/                                   # Documentação técnica completa
+│   ├── architecture.md                     # Desenho da solução
+│   ├── setup.md                            # Como rodar (Docker/Local)
+│   ├── data_model.md                       # Dicionário de dados
+│   └── analytics_metrics.md                # Explicação dos KPIs (Desconto, Faturamento)
+│
+├── .env                                    # Variáveis sensíveis (não commitado)
+├── .gitignore                              # Ignorar venv, data/ e .env
+├── Dockerfile                              # Receita da imagem
+├── docker-compose.yml                      # Orquestra App + PostgreSQL
+├── main.py                                 # Ponto de partida
+├── README.md                               # Guia rápido do projeto
+└── requirements.txt                        # Dependências do projeto
 ```
 
 ## 🛠 Tecnologias Utilizadas

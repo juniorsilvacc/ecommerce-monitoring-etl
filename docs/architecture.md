@@ -28,10 +28,9 @@ ecommerce-monitoring-etl/
 ├── src/                        # Código-fonte principal da aplicação
 │   ├── drivers/                # Conectores externos (HTTP Requester, Database Driver)
 │   ├── pipelines/              # Orquestração dos fluxos (BronzePipeline, SilverPipeline)
-│   ├── transformations/        # Regras de negócio e limpeza (Lógica de conversão/Regex)
+│   ├── stages/                 # Camada de estágios de dados (Extract, Transform e Load)
 │   ├── utils/                  # Funções auxiliares (File handler, logs, formatadores)
-│   ├── models/                 # Definição de schemas e contratos de dados
-│   └── config/                 # Configurações globais, DB e Variáveis de ambiente
+│   └── infra/                  # Configurações globais, DB e modelos de db
 ├── data/                       # Nosso "Data Lake" local dividido por camadas
 │   ├── bronze/                     # Dados brutos (Raw JSON) - Origem da verdade
 │   ├── silver/                     # Dados limpos e tipados (Parquet) - Pronto para análise

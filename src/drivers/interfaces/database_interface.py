@@ -1,4 +1,3 @@
-from typing import List, Dict
 from abc import ABC, abstractmethod
 
 class DatabaseDriverInterface(ABC):

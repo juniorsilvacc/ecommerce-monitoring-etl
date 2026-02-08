@@ -1,5 +1,5 @@
-from src.extracts.mercadolivre_extract import MercadoLivreExtract
-from src.transformations.mercadolivre_transform import MercadolivreTransform
+from src.stages.extract.mercadolivre_extract import MercadoLivreExtract
+from src.stages.transform.mercadolivre_transform import MercadoLivreTransform
 from src.pipelines.bronze_pipeline import BronzePipeline
 from src.pipelines.silver_pipeline import SilverPipeline
 from src.drivers.http_requester import HttpRequester
@@ -14,7 +14,7 @@ def main():
     bronze_pipeline.run()
     
     # --- CAMADA SILVER (TRANSFORMAÇÃO) ---
-    transformer = MercadolivreTransform()
+    transformer = MercadoLivreTransform()
     silver_pipeline = SilverPipeline(transform=transformer)
     silver_pipeline.run()
 

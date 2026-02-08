@@ -158,9 +158,16 @@ Principais campos:
 | preco_atual      | float   | Preço vigente |
 | preco_antigo     | float   | Preço original |
 | avaliacao        | float   | Nota média |
-| vendido          | int     | Quantidade vendida |
-| envio            | string  | Info de frete |
-| data_processamento | timestamp | Controle ETL |
+| quantidade_vendida | int | Quantidade vendida |
+| envio  | string  | Info de frete |
+| percentual_desconto  | float  | Indicador de % de desconto aplicado |
+| faturamento_estimado | float  | Métrica: preco_atual * vendido |
+| score_oportunidade  | float  | KPI: avaliacao * vendido |
+| data_processamento | timestamp | Data e hora em que o dado foi tratado |
+
+	Float	Indicador de % de desconto aplicado
+	Float	
+	Float	KPI: avaliacao * vendido
 
 📄 Detalhes completos em `docs/data_model.md`
 

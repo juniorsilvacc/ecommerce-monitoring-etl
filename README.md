@@ -127,10 +127,6 @@ Principais regras aplicadas:
 - Interpretação de dados textuais
 - Criação de metadados
 
-Exemplo:
-- `"+10 mil vendidos"` → `10000`
-- `preco_antigo = null` → produto sem promoção
-
 📄 Detalhes completos em `docs/transformations.md`
 
 ---
@@ -164,10 +160,6 @@ Principais campos:
 | faturamento_estimado | float  | Métrica: preco_atual * vendido |
 | score_oportunidade  | float  | KPI: avaliacao * vendido |
 | data_processamento | timestamp | Data e hora em que o dado foi tratado |
-
-	Float	Indicador de % de desconto aplicado
-	Float	
-	Float	KPI: avaliacao * vendido
 
 📄 Detalhes completos em `docs/data_model.md`
 
@@ -225,4 +217,3 @@ docker compose down -v
 👨‍💻 Autor
 
 Projeto desenvolvido por Junior Silva
-Foco em Engenharia de Dados, BI e Analytics

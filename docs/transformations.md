@@ -78,7 +78,7 @@ Essa abordagem permite identificar promoções de forma indireta:
 
 ---
 
-### Tratamento da Coluna `vendido`
+### Tratamento da Coluna `quantidade_vendida`
 
 ### Problema na camada Bronze
 
@@ -105,6 +105,82 @@ A coluna `vendido` passa a representar:
 - pronta para agregações, rankings e análises
 
 Essa abordagem mantém a **intenção original do dado**, sem perder informação.
+
+---
+
+### Criação do Indicador `percentual_desconto`
+
+#### Objetivo
+
+Mensurar o percentual de desconto aplicado em relação ao preço original do produto, permitindo identificar promoções reais e comparar ofertas de forma proporcional.
+
+#### Regra de Cálculo
+- (preco_antigo - preco_atual) / preco_antigo
+
+#### Tratamento Aplicado
+
+- O valor de `preco_antigo` é limitado a um mínimo de `0.01` (`clip(lower=0.01)`)
+- Essa abordagem evita divisão por zero em casos de dados inconsistentes
+- O resultado é arredondado para 4 casas decimais
+
+#### Justificativa
+
+- Garante estabilidade do pipeline
+- Permite análise proporcional independente do preço absoluto
+- Facilita uso em dashboards e rankings de oferta
+
+**Classificação:** Indicador
+
+---
+
+### Criação da Métrica `faturamento_estimado`
+
+#### Objetivo
+
+Estimar o volume financeiro gerado por cada produto no momento da coleta.
+
+#### Regra de Cálculo
+   - preco_atual * quantidade_vendida
+
+#### Tratamento Aplicado
+
+- Resultado arredondado para 2 casas decimais
+- Nenhuma agregação entre registros é realizada
+
+#### Justificativa
+
+- Representa impacto financeiro direto
+- Serve como base para análises de receita
+- Facilita priorização de produtos por volume financeiro
+
+**Classificação:** Métrica
+
+---
+
+### Criação do KPI `score_oportunidade`
+
+#### Objetivo
+
+Criar um indicador estratégico que combine **popularidade** e **qualidade percebida** do produto.
+
+#### Regra de Cálculo
+- avaliacao * quantidade_vendida
+
+#### Tratamento Aplicado
+
+- Produtos sem avaliação recebem valor `0.0`
+- Resultado arredondado para 2 casas decimais
+
+#### Justificativa
+
+- Combina métricas independentes em um único score
+- Gera um ranking acionável
+- Apoia decisões como:
+  - priorização de produtos
+  - foco de campanhas
+  - identificação de oportunidades comerciais
+
+**Classificação:** KPI
 
 ---
 

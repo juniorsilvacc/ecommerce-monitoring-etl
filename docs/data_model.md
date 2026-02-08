@@ -90,7 +90,7 @@ Cada linha representa **um produto coletado em um momento específico**.
 
 ---
 
-### `vendido`
+### `quantidade_vendida`
 - **Tipo:** integer
 - **Descrição:** Quantidade estimada de unidades vendidas
 - **Origem:** Campo textual tratado da camada Bronze
@@ -98,6 +98,53 @@ Cada linha representa **um produto coletado em um momento específico**.
   - Textos como `"+10 mil vendidos"` → `10000`
 - **Uso:** Ranking de produtos, análise de popularidade
 
+---
+
+### `percentual_desconto`
+- **Tipo:** float
+- **Descrição:** Percentual de desconto aplicado em relação ao preço original do produto
+- **Fórmula de Cálculo:**
+  - (preco_antigo - preco_atual) / preco_antigo
+- **Regra de Negócio:**
+  - O valor de `preco_antigo` é limitado a um mínimo de `0.01` para evitar divisão por zero
+  - Resultado arredondado para 4 casas decimais
+- **Classificação:** Indicador
+- **Uso:**
+  - Identificação de promoções reais
+  - Comparação proporcional de ofertas
+  - Análises de competitividade de preço
+
+---
+
+### `faturamento_estimado`
+- **Tipo:** float
+- **Descrição:** Estimativa de faturamento gerado pelo produto no momento da coleta
+- **Fórmula de Cálculo:**
+  - preco_atual * quantidade_vendida
+- **Regra de Negócio:**
+  - Valor arredondado para 2 casas decimais
+- **Classificação:** Métrica
+- **Uso:**
+  - Análise de impacto financeiro por produto
+  - Rankings de produtos por volume financeiro
+  - Base para indicadores de receita na camada Gold
+
+---
+
+### `score_oportunidade`
+- **Tipo:** float
+- **Descrição:** Score estratégico que combina popularidade e qualidade do produto
+- **Fórmula de Cálculo:**
+  - avaliacao * quantidade_vendida
+- **Regra de Negócio:**
+  - Produtos sem avaliação recebem nota `0.0`
+  - Resultado arredondado para 2 casas decimais
+- **Classificação:** KPI
+- **Uso:**
+  - Priorização de produtos com maior potencial de oportunidade
+  - Apoio à decisão comercial
+  - Base para rankings estratégicos e dashboards
+  
 ---
 
 ### `data_processamento`

@@ -108,6 +108,58 @@ Essa abordagem mantém a **intenção original do dado**, sem perder informaçã
 
 ---
 
+### Tratamento da Coluna `loja`
+
+### Problema
+
+Alguns produtos não apresentam o nome da loja, resultando em:
+- `None`
+- valores nulos
+
+### Solução
+
+Substituição por `"Não Informado"`.
+
+### Motivo
+
+- Evita valores nulos em análises categóricas
+- Permite agrupar produtos sem loja identificada
+- Mantém consistência visual em relatórios e dashboards
+
+---
+
+### Tratamento da Coluna `envio`
+
+### Problema
+
+O campo de envio pode não estar disponível no momento da coleta.
+
+### Solução
+
+Substituição por `"Consultar Frete"`.
+
+### Motivo
+
+- Representa corretamente o comportamento do marketplace
+- Evita inferências erradas (ex: assumir frete grátis)
+- Mantém o dado interpretável para o analista
+
+---
+
+### Tratamento da Coluna `avaliacao`
+
+### Regra aplicada
+
+Valores nulos são preenchidos com `0.0`.
+
+### Justificativa
+
+- Produtos novos podem não ter avaliação
+- Zero representa ausência de avaliação, não erro
+- Facilita cálculos de média e filtros
+
+---
+
 ### Criação do Indicador `percentual_desconto`
 
 #### Objetivo
@@ -181,58 +233,6 @@ Criar um indicador estratégico que combine **popularidade** e **qualidade perce
   - identificação de oportunidades comerciais
 
 **Classificação:** KPI
-
----
-
-### Tratamento da Coluna `loja`
-
-### Problema
-
-Alguns produtos não apresentam o nome da loja, resultando em:
-- `None`
-- valores nulos
-
-### Solução
-
-Substituição por `"Não Informado"`.
-
-### Motivo
-
-- Evita valores nulos em análises categóricas
-- Permite agrupar produtos sem loja identificada
-- Mantém consistência visual em relatórios e dashboards
-
----
-
-### Tratamento da Coluna `envio`
-
-### Problema
-
-O campo de envio pode não estar disponível no momento da coleta.
-
-### Solução
-
-Substituição por `"Consultar Frete"`.
-
-### Motivo
-
-- Representa corretamente o comportamento do marketplace
-- Evita inferências erradas (ex: assumir frete grátis)
-- Mantém o dado interpretável para o analista
-
----
-
-### Tratamento da Coluna `avaliacao`
-
-### Regra aplicada
-
-Valores nulos são preenchidos com `0.0`.
-
-### Justificativa
-
-- Produtos novos podem não ter avaliação
-- Zero representa ausência de avaliação, não erro
-- Facilita cálculos de média e filtros
 
 ## Metadado `data_processamento`
 

@@ -4,7 +4,7 @@ Pipeline de dados completo para **coleta, tratamento, organização e análise**
 
 Este projeto simula um cenário real de monitoramento de e-commerce, com foco em rastreabilidade, padronização e escalabilidade.
 
-## 🎯 Objetivo do Projeto
+## 🚀 Objetivo do Projeto
 
 Construir um pipeline ETL capaz de:
 
@@ -14,9 +14,13 @@ Construir um pipeline ETL capaz de:
 - Preparar os dados para análise e BI
 - Manter histórico e rastreabilidade
 
-## 🏗️ Arquitetura de Dados
+## 📐 Arquitetura
 
-### O projeto segue o padrão **Medallion Architecture**:
+<img width="1750" height="874" alt="Image" src="https://github.com/user-attachments/assets/c8b6aab3-e5b6-4187-aba1-20263ced67fe" />
+
+## 💎 Padrão de Design de Dados
+
+### `O projeto segue o padrão Medallion Architecture`
 
 ### Bronze 🥉
 - Dados brutos
@@ -37,7 +41,7 @@ Construir um pipeline ETL capaz de:
 
 📄 Documentação detalhada disponível em `docs/architecture.md`
 
-## Estrutura do Projeto
+## 📂 Estrutura do Projeto
 
 ```text
 ecommerce-monitoring-etl/
@@ -86,7 +90,7 @@ ecommerce-monitoring-etl/
 └── requirements.txt                        # Dependências do projeto
 ```
 
-## 🛠 Tecnologias Utilizadas
+## 🛠️ Tecnologias Utilizadas
 
 - **Python 3.12**
 - **Requests**
@@ -99,7 +103,7 @@ ecommerce-monitoring-etl/
 
 ## 🔄 Pipeline ETL
 
-### 1️⃣ Extração (Extract)
+### 1️⃣ Extração (Extract) 📥
 
 - Requisições HTTP simulando navegador
 - Paginação controlada
@@ -116,7 +120,7 @@ ecommerce-monitoring-etl/
 
 ---
 
-### 2️⃣ Transformação (Transform)
+### 2️⃣ Transformação (Transform) ⚙️
 
 Principais regras aplicadas:
 
@@ -130,7 +134,7 @@ Principais regras aplicadas:
 
 ---
 
-### 3️⃣ Carga (Load)
+### 3️⃣ Carga (Load) 📤
 
 - Escrita otimizada em Parquet
 - Organização por fonte
@@ -139,7 +143,7 @@ Principais regras aplicadas:
 
 📁 Saída: `data/silver/mercadolivre/`
 
-## 🧩 Modelo de Dados (Silver)
+## 📊 Modelo de Dados (Silver)
 
 Cada registro representa **um produto em um momento específico**.
 
@@ -164,22 +168,7 @@ Principais campos:
 
 ## ▶️ Como Executar o Projeto
 
-### Ambiente Local
-```bash
-# Criar o ambiente
-python3 -m venv venv
-
-# Ativar o ambiente
-source venv/bin/activate
-
-# Instalação das bibliotecas
-pip install -r requirements.txt
-
-# Executa o main.py
-python3 main.py
-```
-
-### Ambiente Docker (RECOMENDADO)
+### 🐳 Ambiente Docker (RECOMENDADO)
 
 Comandos Principais:
 
@@ -194,6 +183,21 @@ docker start -a etl_app_container
 
 # 3. Parar os containers mantendo os dados do banco
 docker compose stop
+```
+
+### 🐍 Ambiente Local
+```bash
+# Criar o ambiente
+python3 -m venv venv
+
+# Ativar o ambiente
+source venv/bin/activate
+
+# Instalação das bibliotecas
+pip install -r requirements.txt
+
+# Executa o main.py
+python3 main.py
 ```
 
 Caso precise verificar a saúde dos serviços ou inspecionar os dados persistidos:

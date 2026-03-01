@@ -217,6 +217,5 @@ docker exec -it ecommerce_db_container psql -U postgres -d ecommerce_monitoring-
 docker compose down -v
 ```
 
-👨‍💻 Autor
-
-Projeto desenvolvido por Junior Silva
+### 👷 Autor
+[Linkedin](https://www.linkedin.com/in/juniiorsilvadev/) 
